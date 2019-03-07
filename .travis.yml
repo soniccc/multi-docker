@@ -13,7 +13,7 @@ script:
 
 after_success:
   - docker build -t soniccc/multi-client ./client
-  - docker build -t soniccc/multi-nginx ./ngnix
+  - docker build -t soniccc/multi-nginx ./nginx
   - docker build -t soniccc/multi-server ./server
   - docker build -t soniccc/multi-worker ./worker
 
