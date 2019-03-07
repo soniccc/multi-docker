@@ -1,4 +1,7 @@
 sudo: required
+
+language: generic
+
 services:
   - docker
 
@@ -10,8 +13,8 @@ script:
 
 after_success:
   - docker build -t soniccc/multi-client ./client
-  - docker build -t sonniccc/multi-nginx ./ngnix
-  - docker build -t sonniccc/multi-server ./server
+  - docker build -t soniccc/multi-nginx ./ngnix
+  - docker build -t soniccc/multi-server ./server
   - docker build -t soniccc/multi-worker ./worker
 
   # login into the docker CLI - environment variables setup on Travis
@@ -24,4 +27,4 @@ after_success:
   - docker push soniccc/multi-nginx
   - docker push soniccc/multi-server
   - docker push soniccc/multi-worker
-  
+
