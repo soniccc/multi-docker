@@ -1,0 +1,27 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t soniccc/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run soniccc/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t soniccc/multi-client ./client
+  - docker build -t sonniccc/multi-nginx ./ngnix
+  - docker build -t sonniccc/multi-server ./server
+  - docker build -t soniccc/multi-worker ./worker
+
+  # login into the docker CLI - environment variables setup on Travis
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Take those images nad push them to docker hub
+
+  - docker push soniccc/multi-client
+  - docker push soniccc/multi-nginx
+  - docker push soniccc/multi-server
+  - docker push soniccc/multi-worker
+  
